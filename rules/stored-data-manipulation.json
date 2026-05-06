@@ -1,0 +1,18 @@
+{
+  "name": "Stored Data Manipulation",
+  "description": "Detects potential manipulation of stored data in databases or files for integrity attacks",
+  "query": "// Detect mass data manipulation in databases\n// Trigger on bulk UPDATE or DELETE operations\nevents from database\nwhere event_type matches \"(?i)(UPDATE|DELETE)\"\n  and cmdline matches \"(?i)(WHERE\\s+1\\s*=\\s*1|WITHOUT\\s+WHERE|TRUNCATE|DROP\\s+TABLE)\"\ngroup by source_ip\nhaving count(*) > 3\nwithin 120 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1565"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "data-manipulation",
+    "integrity"
+  ],
+  "priority": 93
+}

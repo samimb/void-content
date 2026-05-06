@@ -1,0 +1,18 @@
+{
+  "name": "Virtualization and Sandbox Evasion Check",
+  "description": "Detects processes checking for virtual machine or sandbox environments",
+  "query": "// Detect VM/sandbox detection techniques\n// Trigger on queries for VM indicators\nevents from edr_process\nwhere cmdline matches \"(?i)(systeminfo.*Virtual|wmic.*bios.*VMware|vboxmanage|VBoxService|vmtoolsd|reg.*query.*SystemBiosVersion|Get-WmiObject.*Win32_ComputerSystem.*Model)\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1497"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "sandbox-evasion",
+    "anti-analysis"
+  ],
+  "priority": 73
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Deobfuscate or Decode Files",
+  "description": "Detects use of certutil, openssl, or other tools to decode obfuscated files",
+  "query": "// Detect file decoding using common tools\n// Trigger on certutil decode, openssl dec, or similar\nevents from edr_process\nwhere cmdline matches \"(?i)(certutil.*-decode|openssl\\s+(enc|base64)\\s+-d|gpg\\s+-d|7z.*-p)\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1140"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "decoding",
+    "deobfuscation"
+  ],
+  "priority": 72
+}

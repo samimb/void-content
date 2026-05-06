@@ -1,0 +1,18 @@
+{
+  "name": "Software Discovery and Enumeration",
+  "description": "Detects enumeration of installed software for vulnerability identification",
+  "query": "// Detect installed software enumeration\n// Trigger on wmic product list, dpkg, rpm, or registry queries\nevents from edr_process\nwhere cmdline matches \"(?i)(wmic\\s+product|Get-WmiObject.*Win32_Product|reg.*query.*Uninstall|dpkg\\s+-l|rpm\\s+-qa|apt\\s+list\\s+--installed)\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "low",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1518"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "software",
+    "enumeration"
+  ],
+  "priority": 50
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Network Denial of Service Amplification",
+  "description": "Detects potential network DoS amplification attacks originating from internal hosts",
+  "query": "// Detect DoS amplification patterns\n// Trigger on high-volume UDP traffic to external targets\nevents from ndr_flow\nwhere protocol = \"UDP\"\n  and bytes_sent > 1000000\n  and destination_port in (53, 123, 161, 389, 1900, 11211)\ngroup by source_ip, destination_ip\nhaving count(*) > 10\nwithin 120 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1498"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "dos",
+    "amplification"
+  ],
+  "priority": 85
+}

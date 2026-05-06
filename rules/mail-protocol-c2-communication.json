@@ -1,0 +1,18 @@
+{
+  "name": "Mail Protocol C2 Communication",
+  "description": "Detects unusual SMTP/IMAP/POP3 traffic that may indicate C2 via mail protocols",
+  "query": "// Detect mail protocol abuse for C2\n// Trigger on non-mail-server hosts making SMTP connections\nevents from ndr_flow\nwhere destination_port = 25\n  or destination_port = 587\n  or destination_port = 993\n  and direction = \"outbound\"\ngroup by source_ip\nhaving count(*) > 20\nwithin 600 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1071.003"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "smtp",
+    "mail-protocol"
+  ],
+  "priority": 70
+}

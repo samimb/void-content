@@ -1,0 +1,19 @@
+{
+  "name": "LSASS Memory Access",
+  "description": "Detects suspicious access to LSASS process memory for credential theft",
+  "query": "// LSASS Memory Access Detection\n// Process accessing LSASS memory\nevents from endpoint\nwhere target_process_name = \"lsass.exe\"\n  and event_type = \"process_access\"\n  and access_mask contains \"PROCESS_VM_READ\"\ngroup by hostname, username, process_name\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1003.001"
+  ],
+  "tags": [
+    "credential-access",
+    "lsass",
+    "credential-dumping",
+    "windows",
+    "critical"
+  ],
+  "priority": 95
+}

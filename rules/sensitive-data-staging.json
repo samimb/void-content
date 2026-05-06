@@ -1,0 +1,18 @@
+{
+  "name": "Sensitive Data Staging",
+  "description": "Detects copying of multiple sensitive files to staging directories",
+  "query": "// Data Staging Detection\n// Multiple sensitive files copied to temp/staging locations\nevents from endpoint\nwhere event_type in (\"file_copy\", \"file_create\")\n  and destination_path contains (\"temp\", \"tmp\", \"staging\", \"export\")\n  and file_extension in (\"xlsx\", \"docx\", \"pdf\", \"csv\", \"sql\", \"db\")\ngroup by hostname, username\nhaving count(*) > 20\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1074.001"
+  ],
+  "tags": [
+    "collection",
+    "data-staging",
+    "collection",
+    "exfiltration-prep"
+  ],
+  "priority": 75
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Pass-the-Hash Attack",
+  "description": "Detects NTLM authentication patterns indicative of pass-the-hash attacks",
+  "query": "// Pass-the-Hash Detection\n// NTLM auth from unusual sources\nevents from authentication\nwhere event_type = \"ntlm_authentication\"\n  and logon_type = 3\n  and authentication_package = \"NTLM\"\ngroup by username, source_ip\nhaving count(distinct target_hostname) > 5\nwithin 300 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1550.002"
+  ],
+  "tags": [
+    "lateral-movement",
+    "pass-the-hash",
+    "ntlm",
+    "lateral-movement",
+    "credential-theft"
+  ],
+  "priority": 90
+}

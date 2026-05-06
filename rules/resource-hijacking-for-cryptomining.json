@@ -1,0 +1,18 @@
+{
+  "name": "Resource Hijacking for Cryptomining",
+  "description": "Detects cryptomining activity via process names, command lines, or mining pool connections",
+  "query": "// Detect cryptomining processes\n// Trigger on known miner binaries or mining pool connections\nevents from edr_process\nwhere cmdline matches \"(?i)(xmrig|minerd|ethminer|cgminer|bfgminer|cpuminer|stratum\\+tcp|stratum\\+ssl|--coin=|--donate-level|--algo=)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1496"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "cryptomining",
+    "resource-hijacking"
+  ],
+  "priority": 85
+}

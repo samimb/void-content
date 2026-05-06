@@ -1,0 +1,18 @@
+{
+  "name": "Malicious File Execution from Email Attachment Path",
+  "description": "Detects execution of files from email client temporary directories",
+  "query": "// Detect file execution from email temp directories\n// Trigger on processes from Outlook or Thunderbird temp paths\nevents from edr_process\nwhere exe_path matches \"(?i)(Content\\.Outlook|Thunderbird.*tmp|\\\\olk[A-F0-9]+\\\\)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1204.002"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "malicious-file",
+    "email-attachment"
+  ],
+  "priority": 87
+}

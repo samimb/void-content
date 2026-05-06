@@ -1,0 +1,18 @@
+{
+  "name": "Data Encoding in C2 Communications",
+  "description": "Detects base64 or hex encoding being used to obfuscate C2 traffic",
+  "query": "// Detect encoded data being sent over network\n// Trigger on processes encoding data then making network calls\nevents from edr_process\nwhere cmdline matches \"(?i)(base64|xxd|certutil.*-encode|\\[Convert\\]::ToBase64|openssl.*enc)\"\ngroup by hostname\nhaving count(*) > 3\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1132"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "data-encoding",
+    "obfuscation"
+  ],
+  "priority": 68
+}

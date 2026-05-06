@@ -1,0 +1,18 @@
+{
+  "name": "Inhibit System Recovery",
+  "description": "Detects deletion of shadow copies and backup catalogs to prevent recovery",
+  "query": "// Detect shadow copy deletion and recovery inhibition\n// Trigger on vssadmin, wbadmin, or bcdedit recovery commands\nevents from edr_process\nwhere cmdline matches \"(?i)(vssadmin.*delete.*shadows|wbadmin.*delete.*catalog|bcdedit.*/set.*recoveryenabled.*no|wmic.*shadowcopy.*delete|Get-WmiObject.*Win32_ShadowCopy.*Delete)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1490"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "ransomware",
+    "recovery-inhibition"
+  ],
+  "priority": 97
+}

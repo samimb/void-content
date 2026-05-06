@@ -1,0 +1,18 @@
+{
+  "name": "SSH Lateral Movement",
+  "description": "Detects SSH connections between internal systems",
+  "query": "// SSH Lateral Movement\n// Internal SSH connections between servers\nevents from authentication\nwhere event_type = \"authentication_success\" and service = \"ssh\"\n  and (source_ip starts_with \"10.\" or source_ip starts_with \"192.168.\" or source_ip starts_with \"172.\")\ngroup by source_ip, destination_ip, username\nhaving count(*) > 3\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1021.004"
+  ],
+  "tags": [
+    "lateral-movement",
+    "ssh",
+    "lateral-movement",
+    "linux"
+  ],
+  "priority": 50
+}

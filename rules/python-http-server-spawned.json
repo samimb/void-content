@@ -1,0 +1,19 @@
+{
+  "name": "Python HTTP Server Spawned",
+  "description": "Detects Python simple HTTP server being used for file staging or exfiltration",
+  "query": "// Detect Python HTTP server module execution\n// Often used by attackers for file transfer\nevents from edr_process\nwhere cmdline matches \"(?i)python.*(-m\\s+http\\.server|-m\\s+SimpleHTTPServer)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.006"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "python",
+    "http-server",
+    "staging"
+  ],
+  "priority": 80
+}

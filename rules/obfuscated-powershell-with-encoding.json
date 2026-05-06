@@ -1,0 +1,18 @@
+{
+  "name": "Obfuscated PowerShell with Encoding",
+  "description": "Detects PowerShell commands using encoding and string manipulation for obfuscation",
+  "query": "// Detect PowerShell encoding/obfuscation techniques\n// Trigger on -Encoded, char arrays, or string formatting tricks\nevents from edr_process\nwhere exe_path matches \"(?i)powershell\\.exe$\"\n  and cmdline matches \"(?i)(-enc\\s|\\[char\\]|replace|invoke-expression|iex\\s|\\-join)\"\n  and cmdline matches \"(?i)(\\[char\\].*\\[char\\]|\\-f\\s*'|\\-replace.*\\-replace)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1027"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "obfuscation",
+    "powershell"
+  ],
+  "priority": 82
+}

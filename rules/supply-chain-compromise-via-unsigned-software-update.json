@@ -1,0 +1,18 @@
+{
+  "name": "Supply Chain Compromise via Unsigned Software Update",
+  "description": "Detects execution of unsigned binaries from software update directories",
+  "query": "// Detect unsigned executables launched from update/installer paths\n// Trigger on unsigned binaries in update directories\nevents from edr_process\nwhere exe_path matches \"(?i)(update|installer|setup|patch)\"\n  and signature_status = \"unsigned\"\ngroup by hostname\nhaving count(*) > 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1195"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "supply-chain",
+    "unsigned-binary"
+  ],
+  "priority": 92
+}

@@ -1,0 +1,18 @@
+{
+  "name": "System Shutdown or Reboot Command",
+  "description": "Detects unexpected system shutdown or reboot commands that may indicate impact operations",
+  "query": "// Detect shutdown/reboot commands\n// Trigger on shutdown, reboot, or init 0 commands\nevents from edr_process\nwhere cmdline matches \"(?i)(shutdown\\s+[/-][srhftp]|reboot|init\\s+[06]|halt|poweroff|Stop-Computer|Restart-Computer)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1529"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "shutdown",
+    "reboot"
+  ],
+  "priority": 75
+}

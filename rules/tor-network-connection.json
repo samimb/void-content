@@ -1,0 +1,18 @@
+{
+  "name": "Tor Network Connection",
+  "description": "Detects connections to known Tor network entry/exit nodes",
+  "query": "// Tor Connection Detection\n// Connections to Tor network via known ports\nevents from ndr_flow\nwhere destination_port = 9001 or destination_port = 9030\ngroup by source_ip, destination_ip\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1090.003"
+  ],
+  "tags": [
+    "command-and-control",
+    "tor",
+    "anonymization",
+    "c2"
+  ],
+  "priority": 75
+}

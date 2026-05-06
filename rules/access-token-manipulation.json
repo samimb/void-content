@@ -1,0 +1,17 @@
+{
+  "name": "Access Token Manipulation",
+  "description": "Detects token manipulation techniques used for privilege escalation",
+  "query": "// Detect token impersonation and manipulation\n// Trigger on commands using token manipulation tools\nevents from edr_process\nwhere cmdline matches \"(?i)(Invoke-TokenManipulation|incognito|token::elevate|getsystem|ImpersonateLoggedOnUser|DuplicateToken)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1134"
+  ],
+  "tags": [
+    "privilege-escalation",
+    "privilege-escalation",
+    "token-manipulation"
+  ],
+  "priority": 90
+}

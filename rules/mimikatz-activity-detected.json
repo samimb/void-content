@@ -1,0 +1,19 @@
+{
+  "name": "Mimikatz Activity Detected",
+  "description": "Detects indicators of Mimikatz or similar credential dumping tools",
+  "query": "// Mimikatz Detection\n// Known Mimikatz indicators\nevents from endpoint\nwhere command_line contains \"sekurlsa\" or command_line contains \"kerberos::list\"\n  or command_line contains \"lsadump\" or command_line contains \"privilege::debug\"\n  or process_name contains \"mimikatz\"\ngroup by hostname, username\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1003.001"
+  ],
+  "tags": [
+    "credential-access",
+    "mimikatz",
+    "credential-dumping",
+    "critical",
+    "windows"
+  ],
+  "priority": 100
+}

@@ -1,0 +1,18 @@
+{
+  "name": "File and Directory Discovery Enumeration",
+  "description": "Detects extensive file and directory enumeration indicative of data hunting",
+  "query": "// Detect extensive file enumeration\n// Trigger on recursive directory listing with search patterns\nevents from edr_process\nwhere cmdline matches \"(?i)(dir\\s+/s|find\\s+/|ls\\s+-[lRa]|tree\\s+/f|Get-ChildItem.*-Recurse)\"\n  and cmdline matches \"(?i)(password|credential|secret|key|config|backup|\\.doc|\\.xls|\\.pdf|\\.kdbx)\"\ngroup by hostname\nhaving count(*) > 2\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1083"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "file-enumeration",
+    "data-hunting"
+  ],
+  "priority": 70
+}

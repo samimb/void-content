@@ -1,0 +1,18 @@
+{
+  "name": "Data Transfer Size Limits Evasion",
+  "description": "Detects exfiltration broken into small chunks to evade size-based detection",
+  "query": "// Detect chunked exfiltration to same destination\n// Trigger on many small transfers to the same external IP\nevents from ndr_flow\nwhere direction = \"outbound\"\n  and bytes_sent > 1000\n  and bytes_sent < 50000\ngroup by source_ip, destination_ip\nhaving count(*) > 100\nwithin 600 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1030"
+  ],
+  "tags": [
+    "exfiltration",
+    "exfiltration",
+    "chunked-transfer",
+    "size-limits"
+  ],
+  "priority": 72
+}

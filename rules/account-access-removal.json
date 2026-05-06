@@ -1,0 +1,18 @@
+{
+  "name": "Account Access Removal",
+  "description": "Detects mass disabling or deletion of user accounts to deny access",
+  "query": "// Detect mass account deletion or disabling\n// Trigger on multiple user account modifications in short time\nevents from edr_process\nwhere cmdline matches \"(?i)(net\\s+user.*\\/delete|userdel|Disable-ADAccount|Remove-ADUser|passwd\\s+-l|usermod\\s+-L)\"\ngroup by hostname\nhaving count(*) > 3\nwithin 120 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1531"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "account-removal",
+    "denial-of-service"
+  ],
+  "priority": 92
+}

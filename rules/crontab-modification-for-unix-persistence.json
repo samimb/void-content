@@ -1,0 +1,19 @@
+{
+  "name": "Crontab Modification for Unix Persistence",
+  "description": "Detects crontab modifications used to establish persistence on Unix systems",
+  "query": "// Detect crontab modification commands\n// Trigger on crontab -e or direct cron file writes\nevents from edr_process\nwhere cmdline matches \"(?i)(crontab\\s+-[ei]|echo.*>>.*crontab|/etc/cron\\.|/var/spool/cron)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 120 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1053.003"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "crontab",
+    "unix",
+    "scheduled-task"
+  ],
+  "priority": 78
+}

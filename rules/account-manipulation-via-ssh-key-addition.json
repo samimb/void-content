@@ -1,0 +1,18 @@
+{
+  "name": "Account Manipulation via SSH Key Addition",
+  "description": "Detects modification of SSH authorized_keys files for persistence",
+  "query": "// Detect SSH key addition to authorized_keys\n// Trigger on file writes to .ssh/authorized_keys\nevents from endpoint\nwhere event_type = \"file_write\"\n  and file_path matches \"(?i)\\.ssh[/\\\\]authorized_keys\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1098"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "ssh",
+    "account-manipulation"
+  ],
+  "priority": 82
+}

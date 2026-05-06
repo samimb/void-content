@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious Python Execution with Inline Code",
+  "description": "Detects Python interpreters executing suspicious inline code patterns",
+  "query": "// Detect Python executing inline malicious payloads\n// Trigger on python -c with suspicious imports or commands\nevents from edr_process\nwhere exe_path matches \"(?i)python[23]?(\\.exe)?$\"\n  and cmdline matches \"(?i)-c.*(import\\s+(socket|subprocess|os|ctypes|base64)|exec\\(|eval\\(|__import__)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.006"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "python",
+    "inline-code"
+  ],
+  "priority": 82
+}

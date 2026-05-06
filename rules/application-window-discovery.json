@@ -1,0 +1,18 @@
+{
+  "name": "Application Window Discovery",
+  "description": "Detects enumeration of visible application windows for target identification",
+  "query": "// Detect application window enumeration\n// Trigger on tasklist with window title or xdotool\nevents from edr_process\nwhere cmdline matches \"(?i)(tasklist.*\\/v|Get-Process.*MainWindowTitle|xdotool.*search.*--name|wmctrl\\s+-l)\"\ngroup by hostname\nhaving count(*) > 2\nwithin 120 seconds",
+  "language": "native",
+  "severity": "low",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1010"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "window-enumeration",
+    "reconnaissance"
+  ],
+  "priority": 50
+}

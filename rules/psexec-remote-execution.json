@@ -1,0 +1,19 @@
+{
+  "name": "PsExec Remote Execution",
+  "description": "Detects use of PsExec or similar tools for remote command execution",
+  "query": "// PsExec Detection\n// Remote execution via PsExec/SMB\nevents from endpoint\nwhere process_name = \"psexec.exe\"\n  or (process_name = \"cmd.exe\" and parent_process_name = \"services.exe\")\n  or event_type = \"psexec_execution\"\ngroup by source_hostname, target_hostname, username\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1570",
+    "T1021.002"
+  ],
+  "tags": [
+    "lateral-movement",
+    "psexec",
+    "lateral-movement",
+    "remote-execution"
+  ],
+  "priority": 80
+}

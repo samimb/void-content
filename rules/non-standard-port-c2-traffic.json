@@ -1,0 +1,18 @@
+{
+  "name": "Non-Standard Port C2 Traffic",
+  "description": "Detects outbound connections on non-standard ports that may indicate C2",
+  "query": "// Non-Standard Port C2 Detection\n// HTTP/HTTPS traffic on unusual ports\nevents from ndr_flow\nwhere direction = \"outbound\"\n  and application_protocol in (\"HTTP\", \"HTTPS\")\n  and destination_port not in (80, 443, 8080, 8443)\ngroup by source_ip, destination_ip, destination_port\nhaving count(*) > 10\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1571"
+  ],
+  "tags": [
+    "command-and-control",
+    "c2",
+    "non-standard-port",
+    "network"
+  ],
+  "priority": 50
+}

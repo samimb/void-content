@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious Windows Command Shell Execution",
+  "description": "Detects cmd.exe spawning with suspicious command-line arguments",
+  "query": "// Detect cmd.exe with encoded or obfuscated arguments\n// Trigger on suspicious cmd patterns\nevents from edr_process\nwhere exe_path matches \"(?i)cmd\\.exe$\"\n  and cmdline matches \"(?i)(/c|/k).*(certutil|bitsadmin|wmic|net\\s|reg\\s|sc\\s|schtasks)\"\ngroup by hostname\nhaving count(*) > 2\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.003"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "cmd",
+    "windows"
+  ],
+  "priority": 75
+}

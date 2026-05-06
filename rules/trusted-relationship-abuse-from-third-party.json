@@ -1,0 +1,18 @@
+{
+  "name": "Trusted Relationship Abuse from Third Party",
+  "description": "Detects access from known third-party network ranges authenticating to internal services outside business hours",
+  "query": "// Detect third-party vendor access outside normal patterns\n// Trigger on VPN connections from partner networks at unusual times\nevents from vpn\nwhere event_type = \"connect\"\ngroup by source_ip, username\nhaving count(*) > 3\nwithin 3600 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1199"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "trusted-relationship",
+    "third-party"
+  ],
+  "priority": 75
+}

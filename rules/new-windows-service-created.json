@@ -1,0 +1,18 @@
+{
+  "name": "New Windows Service Created",
+  "description": "Detects creation of new Windows services - common persistence method",
+  "query": "// New Service Creation\n// Services created for persistence or lateral movement\nevents from endpoint\nwhere process_name = \"sc.exe\" and command_line contains \"create\"\n  or event_type = \"service_installed\"\ngroup by hostname, username\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1543.003"
+  ],
+  "tags": [
+    "persistence",
+    "service",
+    "persistence",
+    "windows"
+  ],
+  "priority": 50
+}

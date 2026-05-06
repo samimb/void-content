@@ -1,0 +1,18 @@
+{
+  "name": "Scheduled Task Created",
+  "description": "Detects creation of new scheduled tasks which may indicate persistence mechanism",
+  "query": "// Scheduled Task Creation\n// New scheduled tasks for persistence\nevents from endpoint\nwhere (process_name = \"schtasks.exe\" and command_line contains \"/create\")\n  or event_type = \"scheduled_task_created\"\ngroup by hostname, username\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1053.005"
+  ],
+  "tags": [
+    "persistence",
+    "scheduled-task",
+    "persistence",
+    "windows"
+  ],
+  "priority": 50
+}

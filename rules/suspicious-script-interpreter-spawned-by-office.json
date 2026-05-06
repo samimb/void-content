@@ -1,0 +1,20 @@
+{
+  "name": "Suspicious Script Interpreter Spawned by Office",
+  "description": "Detects Office applications spawning script interpreters - potential macro malware",
+  "query": "// Office Application Spawning Scripts\n// Word/Excel/PowerPoint launching PowerShell, CMD, WScript\nevents from endpoint\nwhere parent_process_name in (\"winword.exe\", \"excel.exe\", \"powerpnt.exe\", \"outlook.exe\")\n  and process_name in (\"powershell.exe\", \"cmd.exe\", \"wscript.exe\", \"cscript.exe\", \"mshta.exe\")\ngroup by hostname, username, parent_process_name\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059",
+    "T1566.001"
+  ],
+  "tags": [
+    "execution",
+    "macro",
+    "office",
+    "malware",
+    "windows"
+  ],
+  "priority": 90
+}

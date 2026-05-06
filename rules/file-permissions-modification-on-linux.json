@@ -1,0 +1,18 @@
+{
+  "name": "File Permissions Modification on Linux",
+  "description": "Detects chmod being used to make files executable in suspicious directories",
+  "query": "// Detect chmod making files executable in temp directories\n// Trigger on chmod +x in /tmp, /dev/shm, or user directories\nevents from edr_process\nwhere cmdline matches \"(?i)chmod\\s+\\+x\\s+(/tmp/|/dev/shm/|/var/tmp/)\"\ngroup by hostname\nhaving count(*) > 2\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1222"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "file-permissions",
+    "linux"
+  ],
+  "priority": 70
+}

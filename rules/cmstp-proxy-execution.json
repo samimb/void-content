@@ -1,0 +1,18 @@
+{
+  "name": "CMSTP Proxy Execution",
+  "description": "Detects CMSTP.exe used to bypass application control and execute arbitrary code",
+  "query": "// Detect CMSTP execution with INF file\n// Trigger on cmstp.exe loading INF files\nevents from edr_process\nwhere exe_path matches \"(?i)cmstp\\.exe$\"\n  and cmdline matches \"(?i)\\.inf\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1218.003"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "cmstp",
+    "signed-binary-proxy"
+  ],
+  "priority": 82
+}

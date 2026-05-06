@@ -1,0 +1,18 @@
+{
+  "name": "Pluggable Authentication Modules Modification",
+  "description": "Detects modification of PAM configuration files for credential interception or backdoor",
+  "query": "// Detect PAM configuration modification\n// Trigger on writes to PAM configuration files\nevents from endpoint\nwhere event_type = \"file_write\"\n  and file_path matches \"(?i)/etc/pam\\.d/|/lib.*/security/pam_\"\ngroup by hostname\nhaving count(*) > 0\nwithin 120 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1556.003"
+  ],
+  "tags": [
+    "credential-access",
+    "credential-access",
+    "pam",
+    "linux-backdoor"
+  ],
+  "priority": 93
+}

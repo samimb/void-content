@@ -1,0 +1,18 @@
+{
+  "name": "Local Account Discovery",
+  "description": "Detects enumeration of local user accounts",
+  "query": "// Detect local account enumeration\n// Trigger on net user, Get-LocalUser, or /etc/passwd enumeration\nevents from edr_process\nwhere cmdline matches \"(?i)(net\\s+user\\s*$|Get-LocalUser|wmic\\s+useraccount|cut.*-d.*:.*-f.*\\/etc\\/passwd|dscl.*-list.*Users)\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "low",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1087.001"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "local-accounts",
+    "enumeration"
+  ],
+  "priority": 55
+}

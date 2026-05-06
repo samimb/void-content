@@ -1,0 +1,18 @@
+{
+  "name": "MFA Request Generation (MFA Fatigue)",
+  "description": "Detects excessive MFA push notifications indicative of MFA fatigue attack",
+  "query": "// Detect MFA fatigue attack\n// Trigger on multiple MFA requests for same user in short time\nevents from authentication\nwhere event_type = \"mfa_challenge\"\n  and status = \"failure\"\ngroup by username\nhaving count(*) > 8\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1621"
+  ],
+  "tags": [
+    "credential-access",
+    "credential-access",
+    "mfa-fatigue",
+    "push-bombing"
+  ],
+  "priority": 87
+}

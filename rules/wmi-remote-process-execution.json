@@ -1,0 +1,18 @@
+{
+  "name": "WMI Remote Process Execution",
+  "description": "Detects Windows Management Instrumentation being used for remote process execution",
+  "query": "// WMI Remote Execution\n// WMI used to execute processes remotely\nevents from endpoint\nwhere process_name = \"wmiprvse.exe\"\n  and event_type = \"process_create\"\ngroup by hostname, username\nhaving count(*) > 3\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1047"
+  ],
+  "tags": [
+    "execution",
+    "wmi",
+    "remote-execution",
+    "windows"
+  ],
+  "priority": 50
+}

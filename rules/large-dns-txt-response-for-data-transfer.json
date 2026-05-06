@@ -1,0 +1,18 @@
+{
+  "name": "Large DNS TXT Response for Data Transfer",
+  "description": "Detects unusually large DNS TXT responses that may indicate DNS-based data transfer",
+  "query": "// Detect large DNS TXT responses\n// Trigger on DNS TXT queries with high response volume\nevents from dns\nwhere query_type = \"TXT\"\n  and record_type = \"TXT\"\ngroup by source_ip, query_name\nhaving count(*) > 50\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1071.004"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "dns",
+    "data-transfer"
+  ],
+  "priority": 80
+}

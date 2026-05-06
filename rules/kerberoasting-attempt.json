@@ -1,0 +1,19 @@
+{
+  "name": "Kerberoasting Attempt",
+  "description": "Detects potential Kerberoasting attacks requesting service tickets",
+  "query": "// Kerberoasting Detection\n// Multiple TGS requests for different services from single user\nevents from authentication\nwhere event_type = \"kerberos_tgs_request\"\n  and encryption_type = \"RC4\"\ngroup by username\nhaving count(distinct service_name) > 10\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1558.003"
+  ],
+  "tags": [
+    "credential-access",
+    "kerberoasting",
+    "kerberos",
+    "credential-theft",
+    "active-directory"
+  ],
+  "priority": 85
+}

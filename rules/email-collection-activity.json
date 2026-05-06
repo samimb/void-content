@@ -1,0 +1,18 @@
+{
+  "name": "Email Collection Activity",
+  "description": "Detects bulk access to email or unusual email export activity",
+  "query": "// Email Collection Detection\n// Bulk email access or export\nevents from email\nwhere event_type in (\"mailbox_export\", \"email_forward_rule_created\")\n  or (event_type = \"email_access\" and access_type = \"delegate\")\ngroup by username, target_mailbox\nhaving count(*) > 50\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1114"
+  ],
+  "tags": [
+    "collection",
+    "email",
+    "collection",
+    "data-theft"
+  ],
+  "priority": 50
+}

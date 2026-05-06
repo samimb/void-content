@@ -1,0 +1,18 @@
+{
+  "name": "BITS Job Used for Persistence or Download",
+  "description": "Detects use of Background Intelligent Transfer Service for file download or persistence",
+  "query": "// Detect bitsadmin used for downloading or persistence\n// Trigger on bitsadmin transfer or addfile commands\nevents from edr_process\nwhere cmdline matches \"(?i)bitsadmin.*(transfer|addfile|setnotifycmdline|resume)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1197"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "bits",
+    "download"
+  ],
+  "priority": 80
+}

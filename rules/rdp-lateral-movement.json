@@ -1,0 +1,18 @@
+{
+  "name": "RDP Lateral Movement",
+  "description": "Detects RDP connections between internal systems indicating lateral movement",
+  "query": "// RDP Lateral Movement\n// Internal RDP connections\nevents from authentication\nwhere event_type = \"rdp_connection\" or service = \"rdp\"\n  and (source_ip starts_with \"10.\" or source_ip starts_with \"192.168.\" or source_ip starts_with \"172.\")\n  and (destination_ip starts_with \"10.\" or destination_ip starts_with \"192.168.\" or destination_ip starts_with \"172.\")\ngroup by source_ip, destination_ip, username\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1021.001"
+  ],
+  "tags": [
+    "lateral-movement",
+    "rdp",
+    "lateral-movement",
+    "remote-desktop"
+  ],
+  "priority": 50
+}

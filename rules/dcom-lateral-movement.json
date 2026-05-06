@@ -1,0 +1,18 @@
+{
+  "name": "DCOM Lateral Movement",
+  "description": "Detects lateral movement using Distributed COM objects",
+  "query": "// Detect DCOM-based lateral movement\n// Trigger on mmc.exe or dllhost.exe spawning processes from remote calls\nevents from edr_process\nwhere parent_exe matches \"(?i)(mmc\\.exe|dllhost\\.exe|excel\\.exe)$\"\n  and exe_path matches \"(?i)(cmd\\.exe|powershell|wscript|cscript|mshta)\"\n  and cmdline matches \"(?i)(/c|/k|-Command|-EncodedCommand)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1021.003"
+  ],
+  "tags": [
+    "lateral-movement",
+    "lateral-movement",
+    "dcom",
+    "remote-execution"
+  ],
+  "priority": 83
+}

@@ -1,0 +1,17 @@
+{
+  "name": "UAC Bypass via Fodhelper or Eventvwr",
+  "description": "Detects UAC bypass techniques using fodhelper.exe or eventvwr.exe registry hijacking",
+  "query": "// Detect UAC bypass via fodhelper or eventvwr\n// Trigger on registry modifications used for UAC bypass\nevents from edr_process\nwhere cmdline matches \"(?i)(fodhelper|eventvwr|computerdefaults|sdclt)\\.exe\"\n  and parent_exe matches \"(?i)(cmd|powershell|wscript)\\.exe$\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1548.002"
+  ],
+  "tags": [
+    "privilege-escalation",
+    "privilege-escalation",
+    "uac-bypass"
+  ],
+  "priority": 85
+}

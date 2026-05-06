@@ -1,0 +1,19 @@
+{
+  "name": "Unauthorized MQTT Access",
+  "description": "Detects connections to MQTT brokers from unauthorized sources or suspicious publish/subscribe patterns",
+  "query": "// MQTT Unauthorized Access (NDR)\n// Suspicious MQTT activity on sensitive topics\nevents from ndr_flow\nwhere protocol = \"mqtt\"\n  and (topic contains \"admin\" or topic contains \"config\"\n    or (message_type = \"publish\" and topic contains \"/command/\"))\ngroup by source_ip, destination_ip\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1071"
+  ],
+  "tags": [
+    "initial-access",
+    "iot",
+    "mqtt",
+    "unauthorized-access",
+    "ndr"
+  ],
+  "priority": 75
+}

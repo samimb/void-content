@@ -1,0 +1,18 @@
+{
+  "name": "Web Service C2 via Cloud Platforms",
+  "description": "Detects communication with cloud platforms commonly abused for C2",
+  "query": "// Detect C2 via cloud platforms (Pastebin, Discord, Telegram, etc.)\n// Trigger on frequent connections to known C2-abused services\nevents from proxy\nwhere domain matches \"(?i)(pastebin\\.com|paste\\.ee|discord\\.com/api|api\\.telegram\\.org|notion\\.so/api|trello\\.com.*attachments|slack\\.com/api/files)\"\ngroup by source_ip\nhaving count(*) > 15\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1102"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "web-service",
+    "cloud-c2"
+  ],
+  "priority": 73
+}

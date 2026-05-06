@@ -1,0 +1,19 @@
+{
+  "name": "LLMNR/NBT-NS Poisoning and SMB Relay",
+  "description": "Detects LLMNR/NBT-NS poisoning attacks and SMB relay attempts",
+  "query": "// Detect LLMNR/NBT-NS poisoning via network traffic\n// Trigger on multiple LLMNR responses from a single non-DNS source\nevents from ndr_flow\nwhere destination_port = 5355\n  and protocol = \"UDP\"\ngroup by source_ip\nhaving count(*) > 20\nwithin 120 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1557.001"
+  ],
+  "tags": [
+    "credential-access",
+    "credential-access",
+    "llmnr",
+    "poisoning",
+    "mitm"
+  ],
+  "priority": 85
+}

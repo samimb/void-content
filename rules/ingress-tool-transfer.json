@@ -1,0 +1,18 @@
+{
+  "name": "Ingress Tool Transfer",
+  "description": "Detects transfer of tools into the environment using common download utilities",
+  "query": "// Detect tool transfer into the environment\n// Trigger on download utilities retrieving executables\nevents from edr_process\nwhere cmdline matches \"(?i)(curl|wget|Invoke-WebRequest|certutil.*-urlcache|bitsadmin.*transfer|Start-BitsTransfer).*\\.(exe|dll|ps1|bat|vbs|hta|py|sh)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1105"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "tool-transfer",
+    "download"
+  ],
+  "priority": 80
+}

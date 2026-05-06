@@ -1,0 +1,18 @@
+{
+  "name": "Remote Service Session Hijacking",
+  "description": "Detects hijacking of existing remote sessions using tscon or similar",
+  "query": "// Detect RDP session hijacking via tscon\n// Trigger on tscon.exe being used to switch sessions\nevents from edr_process\nwhere cmdline matches \"(?i)(tscon\\s+[0-9]+\\s+/dest|query\\s+session|qwinsta)\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1563"
+  ],
+  "tags": [
+    "lateral-movement",
+    "lateral-movement",
+    "session-hijacking",
+    "rdp"
+  ],
+  "priority": 90
+}

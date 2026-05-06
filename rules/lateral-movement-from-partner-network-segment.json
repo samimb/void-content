@@ -1,0 +1,18 @@
+{
+  "name": "Lateral Movement from Partner Network Segment",
+  "description": "Detects unusual lateral movement originating from partner or vendor network segments",
+  "query": "// Detect lateral scanning from partner network segments\n// Trigger on connections to multiple internal IPs from partner subnets\nevents from firewall\nwhere zone_from = \"partner\"\n  and zone_to = \"internal\"\n  and action = \"allow\"\ngroup by source_ip\nhaving count(*) > 20\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1199"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "trusted-relationship",
+    "lateral-movement"
+  ],
+  "priority": 83
+}

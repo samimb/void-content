@@ -1,0 +1,18 @@
+{
+  "name": "Data Destruction via Disk Wiping Tools",
+  "description": "Detects use of disk wiping tools that destroy data for impact",
+  "query": "// Detect disk wiping and data destruction tools\n// Trigger on dd, format, diskpart, or known wipers\nevents from edr_process\nwhere cmdline matches \"(?i)(dd\\s+if=/dev/zero|dd\\s+if=/dev/urandom|format\\s+[a-z]:.*\\/[qQ]|diskpart.*clean|cipher\\s+/w:|nuke|KillDisk)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1561.001"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "data-destruction",
+    "disk-wipe"
+  ],
+  "priority": 97
+}

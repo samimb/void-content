@@ -1,0 +1,18 @@
+{
+  "name": "Remote System Discovery",
+  "description": "Detects network scanning and remote system enumeration",
+  "query": "// Detect remote system discovery via network tools\n// Trigger on ping sweeps, arp scanning, or net view\nevents from edr_process\nwhere cmdline matches \"(?i)(ping\\s+-[cn]|arp\\s+-a|net\\s+view|nltest|dsquery\\s+computer|nbtstat\\s+-[rRnN]|Get-ADComputer)\"\ngroup by hostname\nhaving count(*) > 3\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1018"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "remote-systems",
+    "network-scan"
+  ],
+  "priority": 65
+}

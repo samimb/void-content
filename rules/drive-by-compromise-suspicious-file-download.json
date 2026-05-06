@@ -1,0 +1,18 @@
+{
+  "name": "Drive-by Compromise Suspicious File Download",
+  "description": "Detects downloads of executable content types from uncategorized or malicious proxy categories",
+  "query": "// Detect suspicious executable downloads via proxy\n// Trigger on executable content from risky categories\nevents from proxy\nwhere content_type matches \"(?i)(application/x-msdownload|application/x-executable|application/hta|application/x-msdos-program)\"\n  and category matches \"(?i)(uncategorized|malware|suspicious|newly-registered)\"\ngroup by source_ip\nhaving count(*) > 0\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1189"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "drive-by",
+    "malicious-download"
+  ],
+  "priority": 80
+}

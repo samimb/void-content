@@ -1,0 +1,18 @@
+{
+  "name": "Exfiltration to Code Repository",
+  "description": "Detects data exfiltration via git push or API uploads to code hosting platforms",
+  "query": "// Detect exfiltration to code repositories\n// Trigger on git push or API calls to code platforms with large payloads\nevents from proxy\nwhere domain matches \"(?i)(github\\.com|gitlab\\.com|bitbucket\\.org|codeberg\\.org)\"\n  and method matches \"(?i)(POST|PUT)\"\n  and bytes > 5000000\ngroup by source_ip\nhaving count(*) > 2\nwithin 600 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1567.001"
+  ],
+  "tags": [
+    "exfiltration",
+    "exfiltration",
+    "code-repository",
+    "git"
+  ],
+  "priority": 78
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Hidden Files and Directories Creation",
+  "description": "Detects creation of hidden files using attrib +h on Windows or dot-prefix on Unix",
+  "query": "// Detect hiding files via attrib or dot-prefix\n// Trigger on attrib +h or creation of hidden directories\nevents from edr_process\nwhere cmdline matches \"(?i)(attrib\\s+\\+h|mkdir\\s+\\.|cp.*\\s+\\.)\"\ngroup by hostname\nhaving count(*) > 2\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1564.001"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "hidden-files",
+    "anti-forensics"
+  ],
+  "priority": 68
+}

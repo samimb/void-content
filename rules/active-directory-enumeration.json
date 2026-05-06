@@ -1,0 +1,19 @@
+{
+  "name": "Active Directory Enumeration",
+  "description": "Detects tools querying Active Directory for users, groups, and computers",
+  "query": "// AD Enumeration Detection\n// LDAP queries for domain enumeration\nevents from authentication\nwhere event_type = \"ldap_query\"\n  and (query_filter contains \"objectClass=user\" or query_filter contains \"objectClass=computer\")\ngroup by source_ip, username\nhaving count(*) > 100\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1087.002",
+    "T1069.002"
+  ],
+  "tags": [
+    "discovery",
+    "active-directory",
+    "ldap",
+    "enumeration"
+  ],
+  "priority": 50
+}

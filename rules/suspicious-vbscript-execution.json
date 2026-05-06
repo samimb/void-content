@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious VBScript Execution",
+  "description": "Detects wscript or cscript executing VBScript files from suspicious locations",
+  "query": "// Detect VBScript execution from temp, downloads, or user profile paths\n// Trigger on script hosts running .vbs from unusual locations\nevents from edr_process\nwhere exe_path matches \"(?i)(wscript|cscript)\\.exe$\"\n  and cmdline matches \"(?i)(\\\\temp\\\\|\\\\tmp\\\\|\\\\downloads\\\\|\\\\appdata\\\\|\\\\users\\\\.*\\\\desktop\\\\).*\\.vbs\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.005"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "vbscript",
+    "script-host"
+  ],
+  "priority": 80
+}

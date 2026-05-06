@@ -1,0 +1,20 @@
+{
+  "name": "ARP Spoofing Attack",
+  "description": "Detects ARP spoofing attempts indicating man-in-the-middle attacks",
+  "query": "// ARP Spoofing Detection (NDR)\n// Multiple MAC addresses claiming same IP\nevents from ndr_flow\nwhere protocol = \"arp\"\n  and operation = \"reply\"\ngroup by source_ip\nhaving count(distinct source_mac) > 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1557.002"
+  ],
+  "tags": [
+    "credential-access",
+    "arp-spoofing",
+    "mitm",
+    "network-attack",
+    "ndr",
+    "critical"
+  ],
+  "priority": 95
+}

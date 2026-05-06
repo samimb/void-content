@@ -1,0 +1,18 @@
+{
+  "name": "Internal Spearphishing",
+  "description": "Detects internal email with suspicious attachments or links from compromised accounts",
+  "query": "// Detect internal spearphishing attempts\n// Trigger on internal emails with suspicious attachments to many recipients\nevents from email\nwhere direction = \"internal\"\n  and attachments matches \"(?i)\\.(exe|scr|bat|cmd|vbs|js|hta|ps1|lnk)$\"\ngroup by sender\nhaving count(*) > 5\nwithin 600 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1534"
+  ],
+  "tags": [
+    "lateral-movement",
+    "lateral-movement",
+    "spearphishing",
+    "internal"
+  ],
+  "priority": 82
+}

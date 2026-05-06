@@ -1,0 +1,18 @@
+{
+  "name": "Data Collection from Network Shared Drive",
+  "description": "Detects bulk data access and collection from network file shares",
+  "query": "// Detect bulk data access from network shares\n// Trigger on excessive file access from SMB shares\nevents from edr_process\nwhere cmdline matches \"(?i)(copy|cp|xcopy|robocopy|rsync).*\\\\\\\\.*\\\\\"\ngroup by hostname, user\nhaving count(*) > 10\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1039"
+  ],
+  "tags": [
+    "collection",
+    "collection",
+    "network-share",
+    "data-access"
+  ],
+  "priority": 70
+}

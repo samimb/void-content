@@ -1,0 +1,19 @@
+{
+  "name": "Cloud IAM Policy Modification",
+  "description": "Detects suspicious IAM policy changes that may grant excessive permissions",
+  "query": "// Detect IAM policy modifications in cloud\n// Trigger on policy attachment or inline policy creation\nevents from cloud_audit\nwhere event_name matches \"(?i)(PutUserPolicy|AttachUserPolicy|CreatePolicyVersion|PutRolePolicy|AttachRolePolicy|SetIamPolicy|CreateServiceAccountKey)\"\ngroup by user_identity\nhaving count(*) > 3\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1098"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "cloud",
+    "iam",
+    "policy-modification"
+  ],
+  "priority": 85
+}

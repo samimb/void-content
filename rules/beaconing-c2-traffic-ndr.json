@@ -1,0 +1,20 @@
+{
+  "name": "Beaconing C2 Traffic (NDR)",
+  "description": "Detects regular interval connections to external IPs indicating C2 beaconing - NDR sensor detection",
+  "query": "// C2 Beaconing Detection (NDR)\n// Regular interval connections detected by NDR sensor\nevents from ndr_flow\nwhere alert_type = \"c2_beacon\"\n  or (direction = \"outbound\" and not destination_ip starts_with \"10.\" and not destination_ip starts_with \"192.168.\" and not destination_ip starts_with \"172.\" and beacon_score > 0.8)\ngroup by source_ip, destination_ip\nhaving count(*) > 50\nwithin 3600 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1071.001"
+  ],
+  "tags": [
+    "command-and-control",
+    "c2",
+    "beaconing",
+    "network",
+    "critical",
+    "ndr"
+  ],
+  "priority": 85
+}

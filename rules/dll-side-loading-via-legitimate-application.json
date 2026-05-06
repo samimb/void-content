@@ -1,0 +1,18 @@
+{
+  "name": "DLL Side-Loading via Legitimate Application",
+  "description": "Detects potential DLL side-loading through unsigned DLLs loaded by signed applications",
+  "query": "// Detect signed processes loading unsigned DLLs\n// Indicates potential DLL side-loading\nevents from edr_process\nwhere signature_status = \"signed\"\n  and cmdline matches \"(?i)\\.dll\"\n  and exe_path matches \"(?i)(\\\\temp\\\\|\\\\appdata\\\\|\\\\users\\\\.*\\\\downloads\\\\)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1574.002"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "dll-sideloading",
+    "signed-binary"
+  ],
+  "priority": 80
+}

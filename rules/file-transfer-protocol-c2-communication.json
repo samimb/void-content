@@ -1,0 +1,18 @@
+{
+  "name": "File Transfer Protocol C2 Communication",
+  "description": "Detects FTP/SFTP traffic to unusual external hosts potentially used for C2",
+  "query": "// Detect FTP-based C2 communication\n// Trigger on FTP connections to non-standard external destinations\nevents from ndr_flow\nwhere destination_port = 21\n  or destination_port = 22\n  and direction = \"outbound\"\n  and protocol = \"TCP\"\ngroup by source_ip, destination_ip\nhaving count(*) > 5\nwithin 600 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1071.002"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "ftp",
+    "file-transfer"
+  ],
+  "priority": 68
+}

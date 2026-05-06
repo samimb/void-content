@@ -1,0 +1,18 @@
+{
+  "name": "Mshta Proxy Execution",
+  "description": "Detects mshta.exe used for script execution and application control bypass",
+  "query": "// Detect mshta executing inline scripts or remote HTA files\n// Trigger on mshta with vbscript, javascript, or http\nevents from edr_process\nwhere exe_path matches \"(?i)mshta\\.exe$\"\n  and cmdline matches \"(?i)(vbscript|javascript|http://|https://|about:)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1218.005"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "mshta",
+    "signed-binary-proxy"
+  ],
+  "priority": 85
+}

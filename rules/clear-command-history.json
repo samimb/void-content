@@ -1,0 +1,18 @@
+{
+  "name": "Clear Command History",
+  "description": "Detects clearing of command history files on Unix or PowerShell history",
+  "query": "// Detect clearing of command history\n// Trigger on history -c, rm .bash_history, or Clear-History\nevents from edr_process\nwhere cmdline matches \"(?i)(history\\s+-c|rm.*\\.bash_history|rm.*\\.zsh_history|Clear-History|Remove-Item.*ConsoleHost_history|unset\\s+HISTFILE|export\\s+HISTSIZE=0)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1070.003"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "anti-forensics",
+    "history-clearing"
+  ],
+  "priority": 82
+}

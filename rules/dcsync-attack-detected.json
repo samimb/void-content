@@ -1,0 +1,19 @@
+{
+  "name": "DCSync Attack Detected",
+  "description": "Detects DCSync replication requests from non-domain controllers",
+  "query": "// DCSync Attack Detection\n// Directory replication from non-DC\nevents from authentication\nwhere event_type = \"directory_service_replication\"\ngroup by source_hostname, username\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1003.006"
+  ],
+  "tags": [
+    "credential-access",
+    "dcsync",
+    "active-directory",
+    "credential-theft",
+    "critical"
+  ],
+  "priority": 100
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Hidden Window Process Execution",
+  "description": "Detects processes launched with hidden or minimized windows to avoid detection",
+  "query": "// Detect hidden window execution\n// Trigger on -WindowStyle Hidden or Start-Process -NoNewWindow\nevents from edr_process\nwhere cmdline matches \"(?i)(-WindowStyle\\s+Hidden|-w\\s+hidden|Start-Process.*-NoNewWindow|/b\\s+start.*\\/min)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1564.003"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "hidden-window",
+    "stealth"
+  ],
+  "priority": 75
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Web Defacement via Content Modification",
+  "description": "Detects modification of web server content files indicative of defacement",
+  "query": "// Detect web content file modifications\n// Trigger on writes to web root directories\nevents from endpoint\nwhere event_type = \"file_write\"\n  and file_path matches \"(?i)(wwwroot|htdocs|www|public_html|nginx/html).*\\.(html|htm|php|asp|jsp|index)$\"\ngroup by hostname\nhaving count(*) > 5\nwithin 120 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1491"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "defacement",
+    "web-server"
+  ],
+  "priority": 85
+}

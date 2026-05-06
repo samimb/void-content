@@ -1,0 +1,18 @@
+{
+  "name": "Privilege Escalation Detected",
+  "description": "Immediate alert on any privilege escalation or sudo usage to admin/root",
+  "query": "// Privilege Escalation Detection\n// User gaining elevated privileges\nevents from authentication\nwhere event_type = \"privilege_escalation\"\n  or (event_type = \"sudo_success\" and target_user = \"root\")\ngroup by username, hostname\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1548"
+  ],
+  "tags": [
+    "privilege-escalation",
+    "privilege-escalation",
+    "sudo",
+    "critical"
+  ],
+  "priority": 100
+}

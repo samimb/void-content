@@ -1,0 +1,18 @@
+{
+  "name": "Command Injection Against Public Application",
+  "description": "Detects OS command injection patterns in web request parameters",
+  "query": "// Detect OS command injection in web requests\n// Trigger on shell metacharacters and command patterns in URLs\nevents from proxy\nwhere url matches \"(?i)(;|\\||\\x60|\\$\\()\\s*(cat|ls|id|whoami|wget|curl|nc|bash|sh|ping|sleep)\"\ngroup by source_ip\nhaving count(*) > 2\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1190"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "command-injection",
+    "web-exploitation"
+  ],
+  "priority": 90
+}

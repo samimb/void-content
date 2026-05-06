@@ -1,0 +1,18 @@
+{
+  "name": "WinRM Lateral Movement",
+  "description": "Detects Windows Remote Management used for lateral movement",
+  "query": "// Detect WinRM-based lateral movement\n// Trigger on WinRM connections to multiple hosts\nevents from ndr_flow\nwhere destination_port = 5985\n  or destination_port = 5986\ngroup by source_ip\nhaving count(*) > 5\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1021.006"
+  ],
+  "tags": [
+    "lateral-movement",
+    "lateral-movement",
+    "winrm",
+    "remote-management"
+  ],
+  "priority": 78
+}

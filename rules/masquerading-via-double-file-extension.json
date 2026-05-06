@@ -1,0 +1,18 @@
+{
+  "name": "Masquerading via Double File Extension",
+  "description": "Detects files with double extensions used to disguise malicious executables",
+  "query": "// Detect double file extensions used for masquerading\n// Trigger on files like document.pdf.exe\nevents from endpoint\nwhere event_type = \"file_write\"\n  and file_path matches \"(?i)\\.(pdf|doc|docx|xls|xlsx|jpg|png|txt)\\.(exe|scr|bat|cmd|vbs|js|hta|pif|com)$\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1036"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "masquerading",
+    "double-extension"
+  ],
+  "priority": 85
+}

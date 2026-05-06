@@ -1,0 +1,18 @@
+{
+  "name": "Clipboard Data Collection",
+  "description": "Detects clipboard monitoring and data capture tools",
+  "query": "// Detect clipboard monitoring tools\n// Trigger on clipboard access commands\nevents from edr_process\nwhere cmdline matches \"(?i)(Get-Clipboard|clip\\.exe|pbpaste|xclip|xsel|powershell.*clipboard)\"\ngroup by hostname\nhaving count(*) > 5\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1115"
+  ],
+  "tags": [
+    "collection",
+    "collection",
+    "clipboard",
+    "data-capture"
+  ],
+  "priority": 65
+}

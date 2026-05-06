@@ -1,0 +1,18 @@
+{
+  "name": "Named Pipe Impersonation for Privilege Escalation",
+  "description": "Detects named pipe creation and impersonation commonly used in privilege escalation",
+  "query": "// Detect named pipe impersonation patterns\n// Used by tools like PsExec and PrintSpoofer\nevents from edr_process\nwhere cmdline matches \"(?i)(ImpersonateNamedPipeClient|CreateNamedPipe|PrintSpoofer|JuicyPotato|RottenPotato|SweetPotato|GodPotato)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1134"
+  ],
+  "tags": [
+    "privilege-escalation",
+    "privilege-escalation",
+    "named-pipe",
+    "impersonation"
+  ],
+  "priority": 92
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Cloud Storage Upload",
+  "description": "Detects uploads to cloud storage services that may indicate exfiltration",
+  "query": "// Cloud Storage Exfiltration\n// Large uploads to cloud storage\nevents from proxy\nwhere url contains (\"dropbox.com\", \"drive.google.com\", \"onedrive.live.com\", \"box.com\", \"mega.nz\")\n  and method = \"POST\"\ngroup by username, source_ip\nhaving sum(bytes_sent) > 50000000\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1567.002"
+  ],
+  "tags": [
+    "exfiltration",
+    "cloud-storage",
+    "exfiltration",
+    "data-theft"
+  ],
+  "priority": 50
+}

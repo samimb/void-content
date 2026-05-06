@@ -1,0 +1,19 @@
+{
+  "name": "Port Scan Detection (NDR)",
+  "description": "Identifies port scanning activity via network traffic analysis - high confidence NDR detection",
+  "query": "// Port Scan Detection (NDR)\n// Multiple connection attempts to different ports detected at sensor level\nevents from ndr_flow\nwhere alert_type = \"port_scan\"\n  or connection_state = \"failed\"\ngroup by source_ip\nhaving count(distinct destination_port) > 50\nwithin 60 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1046"
+  ],
+  "tags": [
+    "discovery",
+    "reconnaissance",
+    "port-scan",
+    "network",
+    "ndr"
+  ],
+  "priority": 60
+}

@@ -1,0 +1,23 @@
+{
+  "name": "ICS Unsafe Function Code Execution",
+  "description": "Detects execution of unsafe function codes on ICS/SCADA protocols (Modbus, DNP3)",
+  "query": "// ICS Unsafe Function Code Detection (NDR)\n// Write operations or dangerous function codes in industrial protocols\nevents from ndr_flow\nwhere (protocol = \"modbus\" and function_code in (5, 6, 15, 16))\n  or (protocol = \"dnp3\" and function_code in (2, 129))\n  or (protocol = \"bacnet\" and service = \"WriteProperty\")\n  or (protocol = \"enip\" and command_code in (\"75\", \"76\"))\n  or alert_type = \"ics_unsafe_command\"\ngroup by source_ip, destination_ip, protocol\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T0836",
+    "T0855"
+  ],
+  "tags": [
+    "impact",
+    "ics",
+    "scada",
+    "modbus",
+    "dnp3",
+    "unsafe-operation",
+    "ndr",
+    "critical"
+  ],
+  "priority": 100
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Cloud Infrastructure Discovery",
+  "description": "Detects enumeration of cloud infrastructure resources",
+  "query": "// Detect cloud infrastructure enumeration\n// Trigger on AWS, Azure, or GCP resource listing\nevents from cloud_audit\nwhere event_name matches \"(?i)(DescribeInstances|ListBuckets|ListUsers|GetCallerIdentity|DescribeSecurityGroups|ListVirtualMachines|list-instances)\"\ngroup by user_identity\nhaving count(*) > 15\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1580"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "cloud",
+    "infrastructure-enumeration"
+  ],
+  "priority": 68
+}

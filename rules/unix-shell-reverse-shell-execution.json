@@ -1,0 +1,18 @@
+{
+  "name": "Unix Shell Reverse Shell Execution",
+  "description": "Detects common Unix reverse shell patterns in process command lines",
+  "query": "// Detect reverse shell patterns on Unix/Linux systems\n// Trigger on bash/sh with network redirection\nevents from edr_process\nwhere cmdline matches \"(?i)(bash\\s+-i|/dev/tcp/|mkfifo|nc\\s+-e|ncat\\s+-e|python.*socket.*connect|perl.*socket.*INET)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 30 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.004"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "reverse-shell",
+    "unix"
+  ],
+  "priority": 95
+}

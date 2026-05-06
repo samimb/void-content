@@ -1,0 +1,18 @@
+{
+  "name": "Process Injection via CreateRemoteThread",
+  "description": "Detects process injection using CreateRemoteThread patterns in command lines",
+  "query": "// Detect process injection indicators\n// Trigger on commands referencing remote thread creation or memory manipulation\nevents from edr_process\nwhere cmdline matches \"(?i)(CreateRemoteThread|VirtualAllocEx|WriteProcessMemory|NtCreateThreadEx|RtlCreateUserThread)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1055"
+  ],
+  "tags": [
+    "privilege-escalation",
+    "privilege-escalation",
+    "process-injection",
+    "defense-evasion"
+  ],
+  "priority": 92
+}

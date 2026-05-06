@@ -1,0 +1,18 @@
+{
+  "name": "Path Traversal Attack on Public Application",
+  "description": "Detects directory traversal attempts in web requests",
+  "query": "// Detect path traversal patterns in URLs\n// Trigger on repeated ../ sequences in requests\nevents from proxy\nwhere url matches \"(\\.\\.[\\/\\\\]){2,}\"\ngroup by source_ip\nhaving count(*) > 3\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1190"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "path-traversal",
+    "web-exploitation"
+  ],
+  "priority": 82
+}

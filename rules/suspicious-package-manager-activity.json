@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious Package Manager Activity",
+  "description": "Detects package manager processes spawning unexpected child processes indicative of supply chain compromise",
+  "query": "// Detect package managers spawning shells or network tools\n// Indicates possible malicious post-install scripts\nevents from edr_process\nwhere parent_exe matches \"(?i)(npm|pip|gem|nuget|cargo|composer|yarn)\"\n  and exe_path matches \"(?i)(cmd\\.exe|powershell|bash|sh|curl|wget|nc|ncat)\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1195.002"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "supply-chain",
+    "package-manager"
+  ],
+  "priority": 87
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Web Browser Cookie Theft",
+  "description": "Detects access to browser cookie databases for session hijacking",
+  "query": "// Detect access to browser cookie stores\n// Trigger on reading Chrome, Firefox, or Edge cookie databases\nevents from edr_process\nwhere cmdline matches \"(?i)(Cookies|cookies\\.sqlite|Login Data|logins\\.json|\\\\Google\\\\Chrome\\\\User Data|\\\\Mozilla\\\\Firefox\\\\Profiles)\"\n  and exe_path not matches \"(?i)(chrome|firefox|msedge)\\.exe$\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1539"
+  ],
+  "tags": [
+    "credential-access",
+    "credential-access",
+    "cookie-theft",
+    "session-hijacking"
+  ],
+  "priority": 85
+}

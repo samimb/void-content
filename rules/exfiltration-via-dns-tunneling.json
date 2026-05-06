@@ -1,0 +1,18 @@
+{
+  "name": "Exfiltration via DNS Tunneling",
+  "description": "Detects data exfiltration through DNS queries with encoded subdomains",
+  "query": "// Detect DNS tunneling exfiltration\n// Trigger on high volume of TXT queries with long subdomain labels\nevents from dns\nwhere query_type = \"TXT\"\n  and query_name matches \"^[a-zA-Z0-9+/=]{20,}\\.\"\ngroup by source_ip\nhaving count(*) > 30\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1048.001"
+  ],
+  "tags": [
+    "exfiltration",
+    "exfiltration",
+    "dns-tunneling",
+    "covert-channel"
+  ],
+  "priority": 85
+}

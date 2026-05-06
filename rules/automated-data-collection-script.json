@@ -1,0 +1,18 @@
+{
+  "name": "Automated Data Collection Script",
+  "description": "Detects scripts performing automated collection of files matching sensitive patterns",
+  "query": "// Detect automated collection scripts\n// Trigger on for-loops or find commands collecting specific file types\nevents from edr_process\nwhere cmdline matches \"(?i)(for\\s+.*\\%.*in\\s+\\(.*\\.(doc|xls|pdf|pst)|find\\s+.*-name.*\\*\\.(doc|xls|pdf|pst|msg).*-exec\\s+cp)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 120 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1119"
+  ],
+  "tags": [
+    "collection",
+    "collection",
+    "automated-collection",
+    "script"
+  ],
+  "priority": 80
+}

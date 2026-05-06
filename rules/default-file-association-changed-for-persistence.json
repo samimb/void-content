@@ -1,0 +1,18 @@
+{
+  "name": "Default File Association Changed for Persistence",
+  "description": "Detects modification of file associations to execute malicious handlers",
+  "query": "// Detect file association changes via assoc or ftype commands\n// Trigger on registry modifications to file handlers\nevents from edr_process\nwhere cmdline matches \"(?i)(assoc|ftype)\\s+\\.\"\ngroup by hostname\nhaving count(*) > 0\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1546.001"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "file-association",
+    "registry"
+  ],
+  "priority": 72
+}

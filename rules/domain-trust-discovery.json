@@ -1,0 +1,18 @@
+{
+  "name": "Domain Trust Discovery",
+  "description": "Detects enumeration of Active Directory domain trusts",
+  "query": "// Detect domain trust enumeration\n// Trigger on nltest, Get-ADTrust, or dsquery trust\nevents from edr_process\nwhere cmdline matches \"(?i)(nltest.*domain_trusts|Get-ADTrust|dsquery.*trustedDomain|Get-ForestTrust|([aA]dFind|ldapsearch).*trustdirection)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1482"
+  ],
+  "tags": [
+    "discovery",
+    "discovery",
+    "domain-trust",
+    "active-directory"
+  ],
+  "priority": 72
+}

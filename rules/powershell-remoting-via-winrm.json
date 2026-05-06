@@ -1,0 +1,18 @@
+{
+  "name": "PowerShell Remoting via WinRM",
+  "description": "Detects PowerShell remoting sessions used for lateral movement",
+  "query": "// Detect PowerShell remoting\n// Trigger on Enter-PSSession, Invoke-Command with -ComputerName\nevents from edr_process\nwhere cmdline matches \"(?i)(Enter-PSSession|Invoke-Command.*-ComputerName|New-PSSession|Enable-PSRemoting)\"\ngroup by hostname\nhaving count(*) > 2\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1021.006"
+  ],
+  "tags": [
+    "lateral-movement",
+    "lateral-movement",
+    "powershell-remoting",
+    "winrm"
+  ],
+  "priority": 78
+}

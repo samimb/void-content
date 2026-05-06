@@ -1,0 +1,18 @@
+{
+  "name": "Rundll32 Suspicious Execution",
+  "description": "Detects rundll32.exe executing DLLs from suspicious locations or with unusual exports",
+  "query": "// Detect rundll32 executing DLLs from temp or user directories\n// Trigger on rundll32 with suspicious DLL paths\nevents from edr_process\nwhere exe_path matches \"(?i)rundll32\\.exe$\"\n  and cmdline matches \"(?i)(\\\\temp\\\\|\\\\tmp\\\\|\\\\downloads\\\\|\\\\appdata\\\\|\\\\users\\\\.*\\\\desktop\\\\|javascript:|http://|https://)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1218.011"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "rundll32",
+    "signed-binary-proxy"
+  ],
+  "priority": 82
+}

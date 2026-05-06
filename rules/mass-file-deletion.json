@@ -1,0 +1,18 @@
+{
+  "name": "Mass File Deletion",
+  "description": "Detects mass file deletions that may indicate data destruction or ransomware",
+  "query": "// Mass File Deletion Detection\n// Many files deleted rapidly\nevents from endpoint\nwhere event_type = \"file_delete\"\ngroup by hostname, username\nhaving count(*) > 100\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1485"
+  ],
+  "tags": [
+    "impact",
+    "data-destruction",
+    "file-deletion",
+    "impact"
+  ],
+  "priority": 95
+}

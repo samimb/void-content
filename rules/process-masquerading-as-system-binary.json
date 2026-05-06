@@ -1,0 +1,18 @@
+{
+  "name": "Process Masquerading as System Binary",
+  "description": "Detects processes attempting to masquerade as legitimate system processes",
+  "query": "// Process Masquerading Detection\n// Suspicious process names mimicking system processes from wrong location\nevents from endpoint\nwhere (process_name = \"svchost.exe\" and process_path not contains \"\\System32\\\")\n  or (process_name = \"lsass.exe\" and process_path not contains \"\\System32\\\")\n  or (process_name = \"csrss.exe\" and process_path not contains \"\\System32\\\")\ngroup by hostname, process_name, process_path\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1036.005"
+  ],
+  "tags": [
+    "defense-evasion",
+    "masquerading",
+    "defense-evasion",
+    "process-hiding"
+  ],
+  "priority": 85
+}

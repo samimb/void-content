@@ -1,0 +1,18 @@
+{
+  "name": "Compiled HTML Help File Execution",
+  "description": "Detects execution of compiled HTML help files used for code execution",
+  "query": "// Detect CHM file execution via hh.exe\n// Trigger on hh.exe opening CHM files from unusual locations\nevents from edr_process\nwhere exe_path matches \"(?i)hh\\.exe$\"\n  and cmdline matches \"(?i)(\\\\temp\\\\|\\\\tmp\\\\|\\\\downloads\\\\|\\\\appdata\\\\|\\\\users\\\\).*\\.chm\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1218.001"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "chm",
+    "signed-binary-proxy"
+  ],
+  "priority": 80
+}

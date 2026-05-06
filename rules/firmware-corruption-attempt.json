@@ -1,0 +1,18 @@
+{
+  "name": "Firmware Corruption Attempt",
+  "description": "Detects tools and commands that modify firmware or BIOS settings",
+  "query": "// Detect firmware modification attempts\n// Trigger on flashrom, fwupdate, or BIOS manipulation tools\nevents from edr_process\nwhere cmdline matches \"(?i)(flashrom|fwupd|fwupdmgr|efibootmgr.*-[dDcC]|dd.*if=.*of=/dev/sda$|bcdedit.*/bootstatuspolicy)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 120 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1495"
+  ],
+  "tags": [
+    "impact",
+    "impact",
+    "firmware",
+    "bios"
+  ],
+  "priority": 95
+}

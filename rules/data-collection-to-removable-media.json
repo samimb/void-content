@@ -1,0 +1,18 @@
+{
+  "name": "Data Collection to Removable Media",
+  "description": "Detects bulk data copying to removable media devices",
+  "query": "// Detect data copying to removable drives\n// Trigger on copy operations to removable media paths\nevents from edr_process\nwhere cmdline matches \"(?i)(copy|cp|xcopy|robocopy|rsync).*(E:\\\\|F:\\\\|/media/|/mnt/usb|/Volumes/)\"\ngroup by hostname\nhaving count(*) > 3\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1025"
+  ],
+  "tags": [
+    "collection",
+    "collection",
+    "removable-media",
+    "data-theft"
+  ],
+  "priority": 78
+}

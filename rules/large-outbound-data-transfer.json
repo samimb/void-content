@@ -1,0 +1,18 @@
+{
+  "name": "Large Outbound Data Transfer",
+  "description": "Detects large amounts of data being sent to external destinations",
+  "query": "// Large Outbound Transfer Detection\n// High volume outbound data transfer\nevents from ndr_flow\nwhere event_type = \"network_connection\"\n  and direction = \"outbound\"\n  and not destination_ip starts_with \"10.\"\n  and not destination_ip starts_with \"192.168.\"\n  and not destination_ip starts_with \"172.\"\ngroup by source_ip, destination_ip\nhaving sum(bytes_sent) > 100000000\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1041"
+  ],
+  "tags": [
+    "exfiltration",
+    "exfiltration",
+    "data-transfer",
+    "large-transfer"
+  ],
+  "priority": 80
+}

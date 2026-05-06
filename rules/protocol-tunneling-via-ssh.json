@@ -1,0 +1,18 @@
+{
+  "name": "Protocol Tunneling via SSH",
+  "description": "Detects SSH tunneling used to bypass network controls",
+  "query": "// Detect SSH tunneling with port forwarding\n// Trigger on SSH with -L, -R, or -D flags\nevents from edr_process\nwhere cmdline matches \"(?i)ssh\\s+.*(-L\\s|-R\\s|-D\\s|-w\\s|tunnel)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1572"
+  ],
+  "tags": [
+    "command-and-control",
+    "command-and-control",
+    "tunneling",
+    "ssh"
+  ],
+  "priority": 78
+}

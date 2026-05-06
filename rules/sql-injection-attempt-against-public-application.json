@@ -1,0 +1,18 @@
+{
+  "name": "SQL Injection Attempt Against Public Application",
+  "description": "Detects SQL injection patterns in web requests targeting public-facing applications",
+  "query": "// Detect SQL injection attempts in proxy/web logs\n// Trigger on URL patterns containing SQL keywords\nevents from proxy\nwhere url matches \"(?i)(union.*select|or.*1.*=.*1|drop.*table|insert.*into|exec.*xp_)\"\ngroup by source_ip\nhaving count(*) > 5\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1190"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "sqli",
+    "web-exploitation"
+  ],
+  "priority": 88
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Registry Run Key Modified",
+  "description": "Detects modifications to registry Run keys used for auto-start persistence",
+  "query": "// Registry Run Key Modification\n// Common persistence via auto-start registry keys\nevents from endpoint\nwhere registry_key contains \"\\CurrentVersion\\Run\"\n  and event_type = \"registry_value_set\"\ngroup by hostname, username, registry_key\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1547.001"
+  ],
+  "tags": [
+    "persistence",
+    "registry",
+    "autorun",
+    "persistence",
+    "windows"
+  ],
+  "priority": 80
+}

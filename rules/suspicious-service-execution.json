@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious Service Execution",
+  "description": "Detects services.exe spawning suspicious child processes indicative of service-based execution",
+  "query": "// Detect suspicious processes spawned by service control manager\n// Trigger on services.exe spawning scripting engines or suspicious binaries\nevents from edr_process\nwhere parent_exe matches \"(?i)services\\.exe$\"\n  and exe_path matches \"(?i)(cmd\\.exe|powershell|mshta|wscript|cscript|rundll32|regsvr32)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1569.002"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "service-execution",
+    "windows"
+  ],
+  "priority": 83
+}

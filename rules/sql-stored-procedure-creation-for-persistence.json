@@ -1,0 +1,18 @@
+{
+  "name": "SQL Stored Procedure Creation for Persistence",
+  "description": "Detects creation of suspicious stored procedures that may be used for persistence",
+  "query": "// Detect creation of stored procedures with command execution\n// Trigger on xp_cmdshell or CLR assembly creation\nevents from database\nwhere event_type matches \"(?i)(create_procedure|alter_procedure|sp_configure)\"\n  and cmdline matches \"(?i)(xp_cmdshell|sp_OACreate|CLR|UNSAFE_ASSEMBLY|EXTERNAL_ACCESS)\"\ngroup by source_ip\nhaving count(*) > 0\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1505.001"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "sql",
+    "stored-procedure"
+  ],
+  "priority": 88
+}

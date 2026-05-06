@@ -1,0 +1,18 @@
+{
+  "name": "Drive-by Compromise via Browser Child Process",
+  "description": "Detects browser processes spawning suspicious child processes indicative of drive-by exploitation",
+  "query": "// Detect browsers spawning non-browser child processes\n// Indicates possible drive-by download exploitation\nevents from edr_process\nwhere parent_exe matches \"(?i)(chrome|firefox|msedge|iexplore|safari|opera|brave)\\.exe\"\n  and exe_path matches \"(?i)(cmd\\.exe|powershell|wscript|cscript|mshta|rundll32|regsvr32|certutil)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1189"
+  ],
+  "tags": [
+    "initial-access",
+    "initial-access",
+    "drive-by",
+    "browser-exploit"
+  ],
+  "priority": 90
+}

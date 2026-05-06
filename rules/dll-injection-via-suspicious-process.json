@@ -1,0 +1,18 @@
+{
+  "name": "DLL Injection via Suspicious Process",
+  "description": "Detects DLL injection attempts using rundll32 or suspicious injection patterns",
+  "query": "// Detect DLL injection via rundll32 or injection tools\n// Trigger on suspicious DLL loading patterns\nevents from edr_process\nwhere cmdline matches \"(?i)(rundll32.*DllRegisterServer|mavinject|inject.*\\.dll|Invoke-DllInjection)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1055.001"
+  ],
+  "tags": [
+    "privilege-escalation",
+    "privilege-escalation",
+    "dll-injection",
+    "defense-evasion"
+  ],
+  "priority": 88
+}

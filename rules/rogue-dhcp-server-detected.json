@@ -1,0 +1,20 @@
+{
+  "name": "Rogue DHCP Server Detected",
+  "description": "Detects unauthorized DHCP servers on the network",
+  "query": "// Rogue DHCP Server Detection (NDR)\n// DHCP offers - review source_ip against known DHCP servers\nevents from ndr_flow\nwhere protocol = \"dhcp\"\n  and message_type = \"DHCPOFFER\"\ngroup by source_ip, source_mac\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1557.002"
+  ],
+  "tags": [
+    "initial-access",
+    "dhcp",
+    "rogue-server",
+    "mitm",
+    "ndr",
+    "critical"
+  ],
+  "priority": 95
+}

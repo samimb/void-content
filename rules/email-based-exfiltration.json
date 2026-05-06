@@ -1,0 +1,18 @@
+{
+  "name": "Email-Based Exfiltration",
+  "description": "Detects large emails or many attachments being sent externally",
+  "query": "// Email Exfiltration Detection\n// Large or numerous emails with attachments sent externally\nevents from email\nwhere event_type = \"email_sent\"\n  and has_attachments = true\n  and is_external_recipient = true\ngroup by sender\nhaving sum(attachment_size) > 50000000 or count(*) > 50\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1048.003"
+  ],
+  "tags": [
+    "exfiltration",
+    "email",
+    "exfiltration",
+    "attachments"
+  ],
+  "priority": 50
+}

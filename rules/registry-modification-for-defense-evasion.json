@@ -1,0 +1,18 @@
+{
+  "name": "Registry Modification for Defense Evasion",
+  "description": "Detects registry modifications that disable security features",
+  "query": "// Detect registry changes disabling security features\n// Trigger on disabling Windows Defender, Firewall, UAC\nevents from edr_process\nwhere cmdline matches \"(?i)reg\\s+(add|delete).*(?i)(DisableAntiSpyware|DisableRealtimeMonitoring|EnableLUA|DisableRegistryTools|DisableTaskMgr|SecurityHealth|Windows Defender)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1112"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "registry",
+    "security-disable"
+  ],
+  "priority": 90
+}

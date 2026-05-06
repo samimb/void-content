@@ -1,0 +1,18 @@
+{
+  "name": "Mark-of-the-Web Bypass",
+  "description": "Detects techniques to bypass the Windows Mark-of-the-Web zone identifier",
+  "query": "// Detect MOTW bypass techniques\n// Trigger on removal of Zone.Identifier ADS\nevents from edr_process\nwhere cmdline matches \"(?i)(Unblock-File|Zone\\.Identifier|deleteFile.*Zone|streams\\s+-d|Remove-Item.*-Stream)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1553.005"
+  ],
+  "tags": [
+    "defense-evasion",
+    "defense-evasion",
+    "motw-bypass",
+    "zone-identifier"
+  ],
+  "priority": 78
+}

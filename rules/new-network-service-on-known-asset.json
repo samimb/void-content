@@ -1,0 +1,19 @@
+{
+  "name": "New Network Service on Known Asset",
+  "description": "Detects new network services appearing on known assets (baseline violation)",
+  "query": "// New Service Detection (NDR)\n// Previously unseen service on known host\nevents from ndr_flow\nwhere destination_port not in (\"22\", \"80\", \"443\", \"53\", \"25\", \"3389\")\n  and (destination_ip starts_with \"10.\" or destination_ip starts_with \"192.168.\" or destination_ip starts_with \"172.\")\ngroup by destination_ip, destination_port\nhaving count(*) >= 3\nwithin 300 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1543"
+  ],
+  "tags": [
+    "persistence",
+    "asset-tracking",
+    "baseline-violation",
+    "new-service",
+    "ndr"
+  ],
+  "priority": 60
+}

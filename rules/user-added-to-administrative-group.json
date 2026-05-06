@@ -1,0 +1,18 @@
+{
+  "name": "User Added to Administrative Group",
+  "description": "Detects user accounts being added to high-privilege groups",
+  "query": "// Detect net.exe adding users to admin groups\n// Trigger on admin group modifications\nevents from edr_process\nwhere cmdline matches \"(?i)net\\s+(localgroup|group)\\s+(administrators|domain\\s+admins|enterprise\\s+admins)\\s+/add\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1098"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "account-manipulation",
+    "privilege-escalation"
+  ],
+  "priority": 90
+}

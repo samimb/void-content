@@ -1,0 +1,20 @@
+{
+  "name": "Suspicious TLS JA3 Fingerprint",
+  "description": "Detects known malicious JA3 TLS fingerprints from threat intelligence",
+  "query": "// Suspicious JA3 Detection (NDR)\n// Configure known-bad JA3 hashes in the in() list below\nevents from ndr_flow\nwhere protocol = \"tls\"\n  and ja3_hash != \"\"\ngroup by source_ip, destination_ip, ja3_hash\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1071.001"
+  ],
+  "tags": [
+    "command-and-control",
+    "tls",
+    "ja3",
+    "fingerprinting",
+    "c2",
+    "ndr"
+  ],
+  "priority": 85
+}

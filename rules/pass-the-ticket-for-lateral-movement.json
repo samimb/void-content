@@ -1,0 +1,18 @@
+{
+  "name": "Pass the Ticket for Lateral Movement",
+  "description": "Detects Kerberos ticket injection used for lateral movement",
+  "query": "// Detect pass-the-ticket activity\n// Trigger on Rubeus, mimikatz kerberos, or klist injection\nevents from edr_process\nwhere cmdline matches \"(?i)(kerberos::ptt|Rubeus.*ptt|Invoke-Rubeus|klist.*purge.*klist)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1550.003"
+  ],
+  "tags": [
+    "lateral-movement",
+    "lateral-movement",
+    "pass-the-ticket",
+    "kerberos"
+  ],
+  "priority": 93
+}

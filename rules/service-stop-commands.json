@@ -1,0 +1,18 @@
+{
+  "name": "Service Stop Commands",
+  "description": "Detects stopping of critical services which may indicate sabotage",
+  "query": "// Service Disruption Detection\n// Critical services being stopped\nevents from endpoint\nwhere (process_name = \"sc.exe\" and command_line contains \"stop\")\n  or (process_name = \"net.exe\" and command_line contains \"stop\")\n  or (process_name = \"systemctl\" and command_line contains \"stop\")\ngroup by hostname, username\nhaving count(*) > 5\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1489"
+  ],
+  "tags": [
+    "impact",
+    "service-stop",
+    "disruption",
+    "impact"
+  ],
+  "priority": 80
+}

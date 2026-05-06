@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious Browser Extension Installation",
+  "description": "Detects installation of browser extensions from non-standard sources",
+  "query": "// Detect browser extension installations via command line\n// Trigger on chrome/edge force-install or sideload patterns\nevents from edr_process\nwhere cmdline matches \"(?i)(--load-extension|--install-extension|ExtensionInstallForcelist)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1176"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "browser-extension",
+    "sideloading"
+  ],
+  "priority": 72
+}

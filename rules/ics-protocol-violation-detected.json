@@ -1,0 +1,19 @@
+{
+  "name": "ICS Protocol Violation Detected",
+  "description": "Detects malformed or invalid ICS protocol messages indicating attack or malfunction",
+  "query": "// ICS Protocol Violation Detection (NDR)\n// Malformed packets or protocol violations\nevents from ndr_flow\nwhere protocol in (\"modbus\", \"dnp3\", \"bacnet\", \"opcua\", \"enip\", \"iec104\")\n  and (alert_type = \"protocol_violation\" or parse_error = true)\ngroup by source_ip, destination_ip, protocol\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T0885"
+  ],
+  "tags": [
+    "impact",
+    "ics",
+    "protocol-violation",
+    "ndr",
+    "industrial"
+  ],
+  "priority": 80
+}

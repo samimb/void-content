@@ -1,0 +1,18 @@
+{
+  "name": "Shortcut Modification for Persistence",
+  "description": "Detects modification of LNK files in startup or common locations for persistence",
+  "query": "// Detect LNK file creation in startup directories\n// Trigger on shortcut files in startup or desktop paths\nevents from endpoint\nwhere event_type = \"file_write\"\n  and file_path matches \"(?i)(Startup|Start Menu).*\\.lnk$\"\ngroup by hostname\nhaving count(*) > 1\nwithin 120 seconds",
+  "language": "native",
+  "severity": "medium",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1547.009"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "shortcut",
+    "startup"
+  ],
+  "priority": 70
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Office Macro Spawning Suspicious Process",
+  "description": "Detects Microsoft Office applications spawning suspicious child processes via macros",
+  "query": "// Detect Office applications spawning scripting engines\n// Indicates macro-based malware execution\nevents from edr_process\nwhere parent_exe matches \"(?i)(winword|excel|powerpnt|msaccess|outlook)\\.exe$\"\n  and exe_path matches \"(?i)(cmd\\.exe|powershell|wscript|cscript|mshta|certutil|rundll32)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 30 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1204.002"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "macro",
+    "office"
+  ],
+  "priority": 90
+}

@@ -1,0 +1,18 @@
+{
+  "name": "Office Application Startup Persistence",
+  "description": "Detects file writes to Office startup folders used for persistence",
+  "query": "// Detect writes to Office startup directories\n// Trigger on files placed in XLSTART, STARTUP, or Office template paths\nevents from endpoint\nwhere event_type = \"file_write\"\n  and file_path matches \"(?i)(XLSTART|Microsoft\\\\Word\\\\STARTUP|Microsoft\\\\Excel\\\\STARTUP|Microsoft\\\\Outlook\\\\.*\\.otm)\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1137"
+  ],
+  "tags": [
+    "persistence",
+    "persistence",
+    "office",
+    "startup"
+  ],
+  "priority": 80
+}

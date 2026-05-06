@@ -1,0 +1,18 @@
+{
+  "name": "Screen Capture Activity",
+  "description": "Detects screen capture tools or API calls that may indicate data collection",
+  "query": "// Screen Capture Detection\n// Screenshot tools or APIs\nevents from endpoint\nwhere process_name in (\"snippingtool.exe\", \"screencapture\", \"screenshot\")\n  or command_line contains \"screenshot\"\n  or api_call contains \"CaptureScreen\"\ngroup by hostname, username\nhaving count(*) > 10\nwithin 300 seconds",
+  "language": "native",
+  "severity": "low",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1113"
+  ],
+  "tags": [
+    "collection",
+    "screenshot",
+    "collection",
+    "surveillance"
+  ],
+  "priority": 50
+}

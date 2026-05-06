@@ -1,0 +1,19 @@
+{
+  "name": "PowerShell Encoded Command Execution",
+  "description": "Detects execution of PowerShell with Base64 encoded commands - common malware technique",
+  "query": "// PowerShell Encoded Command Detection\n// Encoded commands often used to obfuscate malicious payloads\nevents from endpoint\nwhere process_name = \"powershell.exe\"\n  and (command_line contains \"-enc\" or command_line contains \"-EncodedCommand\")\ngroup by hostname, username\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.001"
+  ],
+  "tags": [
+    "execution",
+    "powershell",
+    "encoded",
+    "obfuscation",
+    "windows"
+  ],
+  "priority": 85
+}

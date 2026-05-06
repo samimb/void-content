@@ -1,0 +1,18 @@
+{
+  "name": "Suspicious JavaScript Execution via Node or JScript",
+  "description": "Detects node.js or JScript executing suspicious scripts from temporary paths",
+  "query": "// Detect JavaScript execution from suspicious locations\n// Trigger on node/jscript from temp or downloads\nevents from edr_process\nwhere exe_path matches \"(?i)(node|wscript|cscript)\\.exe$\"\n  and cmdline matches \"(?i)(\\\\temp\\\\|\\\\tmp\\\\|\\\\downloads\\\\).*\\.(js|jse)$\"\ngroup by hostname\nhaving count(*) > 0\nwithin 60 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1059.007"
+  ],
+  "tags": [
+    "execution",
+    "execution",
+    "javascript",
+    "jscript"
+  ],
+  "priority": 78
+}

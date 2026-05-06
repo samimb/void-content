@@ -1,0 +1,19 @@
+{
+  "name": "CoAP Unusual Method Execution",
+  "description": "Detects unusual CoAP methods (PUT/DELETE) to IoT devices",
+  "query": "// CoAP Unusual Method Detection (NDR)\n// PUT/DELETE methods on IoT devices\nevents from ndr_flow\nwhere protocol = \"coap\"\n  and method in (\"PUT\", \"DELETE\", \"POST\")\n  and uri_path contains (\"config\", \"admin\", \"update\", \"firmware\")\ngroup by source_ip, destination_ip, method\nhaving count(*) >= 1\nwithin 300 seconds",
+  "language": "native",
+  "severity": "high",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1499"
+  ],
+  "tags": [
+    "impact",
+    "iot",
+    "coap",
+    "unusual-method",
+    "ndr"
+  ],
+  "priority": 80
+}

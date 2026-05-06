@@ -1,0 +1,18 @@
+{
+  "name": "Security Log Cleared",
+  "description": "Detects clearing of security event logs - common attacker defense evasion",
+  "query": "// Security Log Clearing Detection\n// Clearing logs to hide activity\nevents from endpoint\nwhere event_type = \"log_cleared\"\n  or (process_name = \"wevtutil.exe\" and command_line contains \"cl\")\ngroup by hostname, username\nhaving count(*) >= 1\nwithin 60 seconds",
+  "language": "native",
+  "severity": "critical",
+  "enabled": true,
+  "mitre_techniques": [
+    "T1070.001"
+  ],
+  "tags": [
+    "defense-evasion",
+    "log-clearing",
+    "defense-evasion",
+    "anti-forensics"
+  ],
+  "priority": 95
+}
